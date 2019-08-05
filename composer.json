@@ -9,7 +9,7 @@
             "homepage": "https://github.com/chenbool"
         }
     ],
-    "keywords": ["qrcode","二维码"],
+    "keywords": ["curl","网络操作类"],
     "homepage":"https://github.com/chenbool",
     "license": "MIT",
     "minimum-stability": "dev",
