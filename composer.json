@@ -1,0 +1,25 @@
+{
+    "name": "chenbool/curl",
+    "type": "library",
+    "description": "一个轻量级的 PHP 网络操作类, 基于 Curl 封装并实现了 Get | Post | Upload | Download 等常用方法",
+    "authors": [
+        {
+            "name": "chenbool",
+            "email": "30024167@qq.com",
+            "homepage": "https://github.com/chenbool"
+        }
+    ],
+    "keywords": ["qrcode","二维码"],
+    "homepage":"https://github.com/chenbool",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "chenbool\\": "src"
+        }
+    }
+    
+}
