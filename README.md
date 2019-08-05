@@ -10,7 +10,7 @@ PHP-Curl是一个轻量级的网络操作类，实现GET、POST、UPLOAD、DOWNL
 composer require chenbool/curl
 ```
 ```php
-use chenbool\Curl\Curl;
+use chenbool\Curl;
 ```
 
 
