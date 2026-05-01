@@ -1,77 +1,135 @@
-# 关于
-PHP-Curl是一个轻量级的网络操作类，实现GET、POST、UPLOAD、DOWNLOAD常用操作，支持方法链写法
+# PHP Curl 网络请求库
 
+一个轻量级的 PHP 网络操作类，基于 Curl 封装，实现了 GET、POST、UPLOAD、DOWNLOAD 等常用方法，支持方法链式调用。
 
-# 需求
-对低版本做了向下支持，但建议使用 PHP 5.3 +
+## 特性
 
-# 安装
-```shell
+- 轻量级，简单易用
+- 支持 GET、POST 请求
+- 支持文件上传
+- 支持文件下载
+- 支持方法链式调用
+- 支持自动重试
+- 兼容 PHP 5.3+
+
+## 项目结构
+
+```
+curl/
+├── src/                    # 源代码
+│   └── Curl.php           # Curl 操作类
+├── composer.json            # 依赖配置
+├── composer.lock
+└── README.md
+```
+
+## 安装
+
+```bash
 composer require chenbool/curl
 ```
+
+## 快速开始
+
+### 初始化
+
 ```php
 use chenbool\Curl;
-```
 
-
-# 示例
-```php
+// 方式一：new 创建
 $curl = new Curl;
-```
-或者
-```php
+
+// 方式二：静态初始化
 $curl = Curl::init();
 ```
 
+## 请求方法
 
-##### GET:
+### GET 请求
+
 ```php
-$curl->url(目标网址);
+$curl->url('目标网址');
 ```
 
+### POST 请求
 
-##### POST:
 ```php
-$curl->post(变量名, 变量值)->post(多维数组)->url(目标网址);
+// 单一参数
+$curl->post('变量名', '变量值')->url('目标网址');
+
+// 多个参数（多维数组）
+$curl->post(['key1' => 'value1', 'key2' => 'value2'])->url('目标网址');
 ```
 
+### 文件上传
 
-##### UPLOAD:
 ```php
-$curl->post(多维数组)->file($_FILE字段, 本地路径, 文件类型, 原始名称)->url(目标网址);
+$curl->post(['field' => 'value'])
+     ->file('file', '本地路径', '文件类型', '原始名称')
+     ->url('目标网址');
 ```
 
+### 文件下载
 
-##### DOWNLOAD:
 ```php
-$curl->url(文件地址)->save(保存路径);
+$curl->url('文件地址')->save('保存路径');
 ```
 
+## 高级配置
 
-##### 配置
-参考:http://php.net/manual/en/function.curl-setopt.php
+### 自定义 Curl 选项
+
+参考：[PHP curl_setopt](http://php.net/manual/en/function.curl-setopt.php)
 
 ```php
-$curl->set('CURLOPT_选项', 值)->post(多维数组)->url(目标网址);
+$curl->set('CURLOPT_选项', '值')
+     ->post(['key' => 'value'])
+     ->url('目标网址');
 ```
 
-##### 自动重试
+### 自动重试
+
 ```php
-// 出错自动重试N次(默认0)
-$curl->retry(3)->post(多维数组)->url(目标网址);
+// 出错自动重试 N 次（默认 0 次）
+$curl->retry(3)->post(['key' => 'value'])->url('目标网址');
 ```
 
-##### 结果
+## 结果处理
+
 ```php
-// 任务结果状态
+// 判断是否有错误
 if ($curl->error()) {
-    echo $curl->message();
+    echo $curl->message(); // 错误信息
 } else {
-    // 任务进程信息
+    // 获取任务进程信息
     $info = $curl->info();
     
-    // 任务结果内容
+    // 获取任务结果内容
     $content = $curl->data();
 }
-
 ```
+
+## API 说明
+
+| 方法 | 说明 |
+|------|------|
+| `url($url)` | 设置请求 URL |
+| `post($key, $value)` | 设置 POST 参数 |
+| `file($field, $path, $type, $name)` | 设置上传文件 |
+| `save($path)` | 保存下载文件 |
+| `set($option, $value)` | 设置 Curl 选项 |
+| `retry($times)` | 设置重试次数 |
+| `error()` | 判断是否有错误 |
+| `message()` | 获取错误信息 |
+| `info()` | 获取请求信息 |
+| `data()` | 获取响应数据 |
+
+## 环境要求
+
+- PHP >= 5.3.0
+- PHP cURL 扩展
+
+## 相关链接
+
+- [PHP cURL 官方文档](http://php.net/manual/en/book.curl.php)
+- [cURL 项目官网](https://curl.haxx.se/)
